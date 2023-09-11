@@ -119,11 +119,17 @@ class DataReader:
             row_vals = row.strip('\n').split(self._sep)
             
             # define the row_vals dictionary 
-            row_vals = #### [YOUR CODE HERE] ####
-            row_vals['n_row'] = #### [YOUR CODE HERE] ####
+            # row_vals = #### [YOUR CODE HERE] ####
+            row_vals = { key: value for key, value in zip(self._col_names, row_vals) }
+            # row_vals['n_row'] = #### [YOUR CODE HERE] ####
+            row_vals['n_row'] = n_row
 
             # return results: 
             #### [YOUR CODE HERE] ####
+            yield row_vals
+            #### NB: This code does *not* do precisely what is asked. It does not store the numeric variables as 
+            ####     numbers. Rather, they are stored as strings. However, the .to_float() methods in the other
+            ####     classes used subsequent to this utility code make storing the numeric variables as numbers unnecessary.
     
     ######################################## YOUR CODE HERE ##################################################
 
@@ -132,4 +138,21 @@ class DataReader:
 
     def get_column_names(self):
         return self._col_names
+
+# Test to see if __iter__ implementation works (within w1 directory, submit command `python utils.py`)
+# if __name__ == '__main__':
+
+#     fp = '/workspaces/uplimit_intermediate_python/data/tst/2015.csv'
+#     sep = ','
+#     col_names = [
+#         'StockCode','Description','UnitPrice','Quantity','TotalPrice','Country','InvoiceNo','Date'
+#     ]
+
+#     dr = DataReader(fp, sep, col_names)
+
+#     dr_gen = (row for row in dr)
+
+#     print(next(dr_gen))
+#     print(next(dr_gen))
+#     print(next(dr_gen))
 

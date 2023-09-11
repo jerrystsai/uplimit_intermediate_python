@@ -44,8 +44,10 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     }
     """
     ######################################## YOUR CODE HERE ##################################################
-    data_reader = #### [YOUR CODE HERE] ####
-    data_reader_gen = #### [YOUR CODE HERE] ####
+    # data_reader = #### [YOUR CODE HERE] ####
+    # data_reader_gen = #### [YOUR CODE HERE] ####
+    data_reader = dp.data_reader
+    data_reader_gen = (row for row in data_reader)
 
     # skip first row as it is the column name
     _ = next(data_reader_gen)
@@ -53,10 +55,22 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     # initialize the aggregate variable
     aggregate = dict()
 
+# class OutDataColNames:
+#     STOCK_CODE = 'StockCode'
+#     DESCRIPTION = 'Description'
+#     UNIT_PRICE = 'UnitPrice'
+#     QUANTITY = 'Quantity'
+#     TOTAL_PRICE = 'TotalPrice'
+#     COUNTRY = 'Country'
+#     INVOICE_NO = 'InvoiceNo'
+#     DATE = 'Date'
+
     for row in tqdm(data_reader_gen):
         if row[constants.OutDataColNames.COUNTRY] not in aggregate:
-            aggregate[row[constants.OutDataColNames.COUNTRY]] = #### [YOUR CODE HERE] ####
-        aggregate[row[constants.OutDataColNames.COUNTRY]] += #### [YOUR CODE HERE] ####
+            # aggregate[row[constants.OutDataColNames.COUNTRY]] = #### [YOUR CODE HERE] ####
+            aggregate[row[constants.OutDataColNames.COUNTRY]] = dp.to_float(row['TotalPrice']) 
+        # aggregate[row[constants.OutDataColNames.COUNTRY]] += #### [YOUR CODE HERE] ####
+        aggregate[row[constants.OutDataColNames.COUNTRY]] += dp.to_float(row['TotalPrice'])
 
     return aggregate
     ######################################## YOUR CODE HERE ##################################################
